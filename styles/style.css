@@ -1,0 +1,226 @@
+/* DISCLAIMER: Jag är medveten att på vissa ställen bör man använda sig av prefixes för att säkerställa kompatibilitet med äldre versioner av webbläsare,
+men valde att inte ha med dem i denna uppgift.*/
+
+/* Här tar jag bort webbläsarens standardstilar för element */
+* {
+  margin: 0;
+  padding: 0;
+  /* border-box gör att elementet inte får en större width/height när man lägger till padding. */
+  box-sizing: border-box;
+  /* Tar bort dekorationer för länkar */
+  text-decoration: none;
+}
+/* font-size för hela documentet blir 10px, då 16px * 0.625 = 10px*/
+/* 1rem = 10px */
+html {
+  font-size: 62.5%;
+}
+body {
+  /* Importerar en font från webben. Länken går att hitta i HTML-dokumentet. */
+  font-family: "Open Sans", sans-serif;
+}
+
+h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+p {
+  font-size: 1.4rem;
+}
+
+a {
+  color: white;
+}
+
+/* Ger texten i <p> taggarna lite mellanrum. */
+.text-container p {
+  margin: 0.5rem 0 0.5rem 0;
+}
+/* Valde att inte använda mig av gridbox då det inte kändes nödvändigt. */
+.homepage {
+  display: flex;
+  flex-direction: column;
+}
+
+.introduction-container {
+  display: flex;
+  justify-content: space-between;
+  min-height: 45vh;
+}
+
+.about-container .info-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  margin: 0 4rem 0 4rem;
+  width: 40rem;
+}
+
+.about-container .logo-wrapper {
+  margin: 1rem 0 0 1rem;
+}
+
+.about-container {
+  display: flex;
+  flex-direction: column;
+  /* Flex-basis anger den initiala storleken (bredden i detta fall) på flexobjektet. 100% gör att detta element alltid tar upp all plats som finns tillgängligt,
+    oavsett hur mycket plats själva innehållet behöver.*/
+  flex-basis: 100%;
+}
+
+.services-container h3 {
+  font-size: 1.8rem;
+  color: white;
+}
+
+.services-container p {
+  color: white;
+}
+
+.services-container .text-container {
+  margin: 5rem 0 5rem 10rem;
+}
+
+.services-container {
+  display: flex;
+  align-items: center;
+  background: #2f80ed;
+  border-bottom-left-radius: 20rem;
+  /* Flex-basis anger den initiala storleken (bredden i detta fall) på flexobjektet. 100% gör att detta element alltid tar upp all plats som finns tillgängligt,
+    oavsett hur mycket plats själva innehållet behöver.*/
+  flex-basis: 100%;
+}
+
+.image-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin: 3rem 0 3rem 0;
+}
+
+.image-container .image-wrapper {
+  width: 20rem;
+  height: 20rem;
+  margin: 0 3rem 0 3rem;
+}
+
+.image-container .image-wrapper img {
+  height: 100%;
+  width: 100%;
+  border-radius: 5.5rem;
+  object-fit: cover;
+}
+
+.courses-container h2 {
+  font-size: 2.5rem;
+  color: #2f80ed;
+}
+
+.courses-container .text-container {
+  margin: 2rem 3rem 4rem 7rem;
+}
+
+.courses-container {
+  background: #e0ecfd;
+  width: 60vw;
+  margin: 3rem 0 3rem 0;
+  border-top-right-radius: 5.5rem;
+  border-bottom-right-radius: 5.5rem;
+}
+
+footer .footer-container p {
+  color: white;
+}
+
+footer .footer-container {
+  color: white;
+  margin: 2rem 0 2rem 2rem;
+}
+
+footer {
+  background: #2f80ed;
+}
+/* Här ser vi till att sidan inte växer efter bredden 1600px. */
+@media screen and (min-width: 1600px) {
+  .homepage {
+    /* Anger en fast längd för hela sidan så att den inte växer utöver bredden 1600px. */
+    width: 160rem;
+  }
+  .courses-container {
+    /* Räknar ut vad 60vw är i relation till bredden 1600px. */
+    width: calc(160rem * 0.6);
+  }
+}
+/* Här ser vi till att bilderna bildar två kolumner efter bredden 1024px. */
+@media screen and (max-width: 1024px) {
+  .image-container {
+    flex-wrap: wrap;
+  }
+  .image-container .image-wrapper {
+    width: 25rem;
+    /* Vi anger 4rem för margin left och right för att flexbox ska bilda två kolumner och två rader av bilderna. Ex:
+    [bild][bild]
+    [bild][bild]
+
+    Om margin mellan bilderna är för liten finns risken att det bildas tre kolumner och två rader. Ex:
+    [bild][bild][bild]
+    [    ][bild][    ]*/
+    margin: 2rem 7rem 2rem 7rem;
+  }
+  .about-container .info-container {
+    /* Ville skapa en smooth övergång mellan en statisk bredd på 40rem till en dynamisk bredd som minskar desto mindre bredden på skärmen blir. */
+    width: calc(8rem + 31vw);
+  }
+}
+/* Här ser vi till att bilderna inte bildar en kolumn med fyra rader efter bredden 800px. */
+@media screen and (max-width: 800px) {
+  .image-container .image-wrapper {
+    margin-left: 2rem;
+    margin-right: 2rem;
+  }
+}
+/* Här görs flera ändringar efter bredden 600px. Läs nedanstående kommentarer för mer info. */
+@media screen and (max-width: 600px) {
+  /* Döljer information som vi inte vill visa (enligt Figma specifikationerna). */
+  .services-container {
+    display: none;
+  }
+
+  .image-container {
+    margin-top: 0rem;
+  }
+
+  /* Vid 600px så vill vi bilda en kolumn med alla bilder. Detta görs genom att ge alla bilder en bredd på 100% */
+  .image-container .image-wrapper {
+    height: 25rem;
+    margin: 1rem 0 1rem 0;
+    width: 100%;
+    border-radius: 0;
+  }
+
+  .image-container .image-wrapper img {
+    border-radius: 0;
+  }
+
+  .introduction-container {
+    min-height: 35vh;
+    /* order specificerar vilken plats ett flex element ska visas. Default är 0. Så jag ger denna -2 för att visa innehållet längst upp. */
+    order: -2;
+  }
+
+  .courses-container {
+    width: 80vw;
+    /* order specificerar vilken plats ett flex element ska visas. Default är 0. Så jag ger denna -1 för att visa innehållet efter elementet med classen introduction-container. */
+    order: -1;
+  }
+
+  .courses-container .text-container {
+    margin-left: 2rem;
+  }
+
+  .about-container .info-container {
+    width: 80%;
+  }
+}
